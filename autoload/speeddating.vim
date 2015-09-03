@@ -163,6 +163,8 @@ endfunction
 
 function! speeddating#incrementvisual(count)
   let ve = &ve
+  let fpos = getpos('.')
+  let tpos = getpos("'>")
   set virtualedit=all
   exe "norm! gv\<Esc>"
   if &selection ==# 'exclusive' && getpos('.') == getpos("'>")
@@ -196,7 +198,9 @@ function! speeddating#incrementvisual(count)
     let lnum += 1
   endwhile
   let &ve = ve
-  call setpos("']",[0,line('.'),col('$'),0])
+  call setpos(".",remove(fpos,0,2))
+  normal! gv
+  call setpos(".",remove(tpos,0,2))
 endfunction
 
 " }}}1
